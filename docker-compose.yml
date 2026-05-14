@@ -1,0 +1,42 @@
+services:
+  mongodb:
+    container_name: container-p5-mdb
+    image: mongo:8
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo_p5_db:/data/db
+
+  migration:
+    build: .
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+  migration-test:
+    build: .
+    depends_on: 
+      migration:
+        condition: service_completed_successfully
+    environment:
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_PORT: ${MONGO_PORT}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    command: python3 src/script_test_migration.py
+
+volumes:
+  mongo_p5_db:
+    name: volume-p5-mdb
