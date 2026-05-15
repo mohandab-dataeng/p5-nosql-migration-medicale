@@ -5,7 +5,6 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 class TestMigration(unittest.TestCase):
 
     def setUp(self): # Indispensable unitest recherche la méthode setUp
@@ -17,6 +16,7 @@ class TestMigration(unittest.TestCase):
             password=os.getenv('MONGO_PASSWORD')
         )
         self.db = client['medical_p5']
+        self.db_admin = client['admin']
 
     def test_colonnes_migrees(self):
         colonnes_attendues = [
@@ -49,6 +49,24 @@ class TestMigration(unittest.TestCase):
         self.assertEqual(self.db['patients'].count_documents({}), nb_patients_csv)
         self.assertEqual(self.db['healthcare_facility'].count_documents({}), nb_facilities_csv)
         self.assertEqual(self.db['encounters'].count_documents({}), nb_encounters_csv)
+
+    def test_indexation(self):
+        index_patients = self.db["patients"].index_information()
+        self.assertIn("patient_id_1", index_patients)
+        self.assertIn("Medical Condition_1", index_patients)
+        index_facility = self.db["healthcare_facility"].index_information()
+        self.assertIn("facility_id_1", index_facility)
+        index_encounters = self.db["encounters"].index_information()
+        self.assertIn("patient_id_1", index_encounters)
+        self.assertIn("Date of Admission_1", index_encounters)
+        self.assertIn("Room Number_1", index_encounters)
+
+    def test_users(self):
+        result = self.db_admin.command("usersInfo")
+        usernames = [u["user"] for u in result["users"]]
+        self.assertIn(os.getenv("MONGO_USER_READ"), usernames)
+        self.assertIn(os.getenv("MONGO_USER_READWRITE"), usernames)
+        self.assertIn(os.getenv("MONGO_USER_ADMIN"), usernames)
 
     def tearDown(self):
         self.db.client.close()

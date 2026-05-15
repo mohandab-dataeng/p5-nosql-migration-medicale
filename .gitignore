@@ -3,3 +3,6 @@
 __pycache__/
 *.pyc*.code-workspace
 data/
+notebooks/.~lock.*
+*.bak
+notebooks/*.csv
