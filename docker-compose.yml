@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - mongo_p5_db:/data/db
-
+      - mongo_p5_config:/data/configdb
   migration:
     build: .
     depends_on:
@@ -48,7 +48,8 @@ services:
       - ./data:/app/data
       - ./src:/app/src
     command: python3 src/script_test_migration.py
-
 volumes:
   mongo_p5_db:
-    name: volume-p5-mdb
+    name: volume-p5-db
+  mongo_p5_config:
+    name: volume-p5-config
