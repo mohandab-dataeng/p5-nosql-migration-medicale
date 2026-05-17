@@ -1,8 +1,10 @@
 .venv/
 .env
 __pycache__/
-*.pyc*.code-workspace
+*.pyc*
+*.code-workspace
 data/
 notebooks/.~lock.*
 *.bak
 notebooks/*.csv
+notebooks/profiling-script.ipynb
