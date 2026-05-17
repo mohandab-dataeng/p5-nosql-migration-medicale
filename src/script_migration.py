@@ -1,6 +1,6 @@
 # SCRIPT DE MIGRATION (P5)
 
-# On charche les driver (classe des librairies) pour parler à .env et mongodb et à l'os(natif python)
+# On charche les drivers (classe des librairies) pour parler à .env et mongodb et à l'os(natif python)
 import os
 import pandas as pd 
 from dotenv import load_dotenv 
