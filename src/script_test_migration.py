@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 load_dotenv()
 class TestMigration(unittest.TestCase):
 
-    def setUp(self): # Indispensable unitest recherche la méthode setUp
-        self.df = pd.read_csv('data/healthcare_dataset.csv') # Pandas recupere le csv
+    def setUp(self): 
+        self.df = pd.read_csv('data/healthcare_dataset.csv') 
         client = MongoClient(
-            host=os.getenv('MONGO_HOST'), # Comme pour le script de migration on prends se connecteà l'image
+            host=os.getenv('MONGO_HOST'), 
             port=int(os.getenv('MONGO_PORT')),
             username=os.getenv('MONGO_USER'),
             password=os.getenv('MONGO_PASSWORD')
