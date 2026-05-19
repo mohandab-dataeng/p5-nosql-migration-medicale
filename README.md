@@ -9,7 +9,7 @@
 
 ## 1\. Présentation
 
-Un client privé a une problématique de volume pour des données de santé. Ces données semblent être de type relationnel, mis à plat, elles nous sont fournies au format .csv. La solution est de migrer les données en NoSQL. L'ensemble des services ; pipeline, service NoSQL et bases sont intégrés dans des containers Docker, afin de permettre une meilleure scalabilité face à la croissance.
+Un client privé a une problématique de volume croissant pour ses données de santé. Ces données semblent être de type relationnel une fois mis à plat, elles nous sont fournies au format .csv. La solution retenue est de migrer les données en NoSQL. L'ensemble des services ; pipeline, service NoSQL et bases sont intégrés dans des containers Docker afin de permettre une meilleure scalabilité face à la croissance.
 
 **Infrastructure :**
 
