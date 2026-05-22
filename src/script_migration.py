@@ -43,7 +43,7 @@ def main():
         # Suppression des doublons (534 selon sweetviz)
         df = df.drop_duplicates()
 
-    # 5) Génération des Ids (clé primaire) pour les collections avant chaque 
+    # 5) Génération des Ids (clé primaire) pour les collections avant chaque insertions
 
         # On doit créer un ID unique par patient et facility AVANT d'éclater le df sinon jointure impossible sur mdb
         # Pour la collection "patients"
@@ -76,8 +76,8 @@ def main():
         facility_cols = ["facility_id", "Hospital",]
         encounters_cols = ["patient_id", "facility_id", "Date of Admission", "Admission Type", "Room Number", "Doctor", "Test Results", "Medication", "Billing Amount", "Discharge Date"]
 
-        df_patients = df[patients_cols].drop_duplicates()
-        df_facility = df[facility_cols].drop_duplicates()
+        df_patients = df[patients_cols].drop_duplicates() # Ca doit être unique !
+        df_facility = df[facility_cols].drop_duplicates() # Pareil, ce sont des Id
         df_encounters = df[encounters_cols] 
 
         # On convertit sinon illisible par mongodb : orient = 'records' transforme chaque lignes en dict (pour le json)
