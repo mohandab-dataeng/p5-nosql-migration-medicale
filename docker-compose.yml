@@ -2,6 +2,14 @@ services:
   mongodb:
     container_name: container-p5-mdb
     image: mongo:8
+    healthcheck:
+      start_period: 10s
+      test: ["CMD", "mongosh", "--eval","db.runCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: 
+      - p5_network
     ports:
       - "27017:27017"
     environment:
@@ -13,7 +21,10 @@ services:
   migration:
     build: .
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
+    networks: 
+    - p5_network
     environment:
       MONGO_HOST: ${MONGO_HOST}
       MONGO_PORT: ${MONGO_PORT}
@@ -33,6 +44,8 @@ services:
     depends_on: 
       migration:
         condition: service_completed_successfully
+    networks: 
+      - p5_network
     environment:
       MONGO_HOST: ${MONGO_HOST}
       MONGO_PORT: ${MONGO_PORT}
@@ -53,3 +66,6 @@ volumes:
     name: volume-p5-db
   mongo_p5_config:
     name: volume-p5-config
+networks :
+  p5_network:
+    name: p5-migration-network
