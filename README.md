@@ -219,5 +219,5 @@ Le script de migration pousse les collections avec `insert_many`. L'objectif ét
 
 ## 10\. Auteur
 
-Mohamed Abaran - Data Engineer - Expert en ingénierie et science des données(RNCP39775)
+Mohand Aburan - Data Engineer - Expert en ingénierie et science des données(RNCP39775)
 GitHub : https://github.com/mohandab-dataeng/p5-nosql-migration-medicale
